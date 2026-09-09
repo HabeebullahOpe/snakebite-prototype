@@ -2,13 +2,13 @@ export interface Clinic {
   id: string
   name: string
   nameYoruba: string
-  type: 'General Hospital' | 'Teaching Hospital' | 'Health Center' | 'Private Clinic'
+  type: string
   address: string
   lat: number
   lng: number
   phone: string
   antivenomStock: 'Available' | 'Low' | 'Unavailable'
-  distance?: number // Will be calculated
+  distance?: number
 }
 
 export const clinics: Clinic[] = [
@@ -102,7 +102,6 @@ export const clinics: Clinic[] = [
   },
 ]
 
-// Simulate locations for testing
 export const simulatedLocations = {
   osogbo: { lat: 7.7833, lng: 4.5667, label: 'Osogbo' },
   ede: { lat: 7.7333, lng: 4.4333, label: 'Ede' },
@@ -115,8 +114,7 @@ export function calculateDistance(
   lat2: number,
   lng2: number
 ): number {
-  // Haversine formula for distance in kilometers
-  const R = 6371 // Earth's radius in km
+  const R = 6371
   const dLat = (lat2 - lat1) * Math.PI / 180
   const dLng = (lng2 - lng1) * Math.PI / 180
   const a = 
@@ -124,7 +122,7 @@ export function calculateDistance(
     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
     Math.sin(dLng/2) * Math.sin(dLng/2)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-  return R * c // Distance in km
+  return R * c
 }
 
 export function findNearestClinic(
@@ -137,11 +135,9 @@ export function findNearestClinic(
     distance: calculateDistance(lat, lng, clinic.lat, clinic.lng)
   }))
 
-  // Sort by distance
   let sorted = withDistance.sort((a, b) => (a.distance || 0) - (b.distance || 0))
 
   if (preferAvailable) {
-    // Prioritize clinics with available antivenom
     const available = sorted.filter(c => c.antivenomStock === 'Available')
     const lowStock = sorted.filter(c => c.antivenomStock === 'Low')
     const unavailable = sorted.filter(c => c.antivenomStock === 'Unavailable')
