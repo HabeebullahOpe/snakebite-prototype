@@ -146,3 +146,112 @@ export function findNearestClinic(
 
   return sorted
 }
+
+// Add to existing file
+
+export interface CommunityResponder {
+  id: string
+  name: string
+  phone: string
+  type: 'Medical' | 'Driver' | 'General'
+  lat: number
+  lng: number
+  available: boolean
+  vehicle?: 'Car' | 'Keke' | 'Bus' | 'Motorcycle' | 'None'
+  distance?: number
+}
+
+export interface EmergencyAlert {
+  id: string
+  victimLat: number
+  victimLng: number
+  victimName?: string
+  victimPhone?: string
+  status: 'pending' | 'clinic-confirmed' | 'transport-dispatched' | 'in-transit' | 'resolved'
+  createdAt: string
+  confirmedAt?: string
+  dispatchedAt?: string
+  resolvedAt?: string
+  clinicId?: string
+  responderId?: string
+  driverId?: string
+  notes?: string
+}
+
+// Mock community responders
+export const communityResponders: CommunityResponder[] = [
+  {
+    id: 'resp-1',
+    name: 'Dr. Adebayo Ogundipe',
+    phone: '0803-111-2222',
+    type: 'Medical',
+    lat: 7.7850,
+    lng: 4.5700,
+    available: true,
+    vehicle: 'Car',
+  },
+  {
+    id: 'resp-2',
+    name: 'Nurse Funke Adeleke',
+    phone: '0805-333-4444',
+    type: 'Medical',
+    lat: 7.7800,
+    lng: 4.5600,
+    available: true,
+    vehicle: 'None',
+  },
+  {
+    id: 'resp-3',
+    name: 'Mr. Tunde Bakare (Driver)',
+    phone: '0807-555-6666',
+    type: 'Driver',
+    lat: 7.7900,
+    lng: 4.5650,
+    available: true,
+    vehicle: 'Bus',
+  },
+  {
+    id: 'resp-4',
+    name: 'Mr. Segun Ojo (Keke)',
+    phone: '0809-777-8888',
+    type: 'Driver',
+    lat: 7.7750,
+    lng: 4.5500,
+    available: true,
+    vehicle: 'Keke',
+  },
+  {
+    id: 'resp-5',
+    name: 'Mrs. Bola Adeyemi',
+    phone: '0811-999-0000',
+    type: 'General',
+    lat: 7.7700,
+    lng: 4.5450,
+    available: true,
+    vehicle: 'None',
+  },
+  {
+    id: 'resp-6',
+    name: 'Mr. Kunle Olawale (Driver)',
+    phone: '0813-222-3333',
+    type: 'Driver',
+    lat: 7.7600,
+    lng: 4.5300,
+    available: true,
+    vehicle: 'Car',
+  },
+]
+
+export function findNearbyResponders(
+  lat: number,
+  lng: number,
+  radiusKm: number = 5
+): CommunityResponder[] {
+  return communityResponders
+    .map(responder => ({
+      ...responder,
+      distance: calculateDistance(lat, lng, responder.lat, responder.lng)
+    }))
+    .filter(r => r.distance! <= radiusKm && r.available)
+    .sort((a, b) => (a.distance || 0) - (b.distance || 0))
+}

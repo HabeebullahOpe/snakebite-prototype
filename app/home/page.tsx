@@ -7,7 +7,7 @@ import { LanguageToggle } from '@/components/ui/LanguageToggle'
 import { SOSButton } from '@/components/ui/SOSButton'
 import { LocationSimulator } from '@/components/LocationSimulator'
 import { motion } from 'framer-motion'
-import { BookOpen, MapPin } from 'lucide-react'
+import { BookOpen, MapPin, Users, Truck, Car } from 'lucide-react'  // ← Added Users, Truck, Car
 
 export default function HomeScreen() {
   const { t } = useLanguage()
@@ -80,6 +80,41 @@ export default function HomeScreen() {
               Find Clinics
             </p>
           </button>
+        </motion.div>
+
+        {/* Team Access */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-6 space-y-2"
+        >
+          <p className="text-center text-xs text-[#1B2A4A]/40 mb-2">
+            Team Access
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => router.push('/responder')}
+              className="flex-1 py-3 bg-white rounded-xl shadow border border-[#E5D9C4] hover:shadow-lg transition-all text-center"
+            >
+              <Users className="text-[#2F6B4F] mx-auto mb-1" size={18} />
+              <span className="text-xs font-medium text-[#1B2A4A]">Responder</span>
+            </button>
+            <button
+              onClick={() => router.push('/clinic')}
+              className="flex-1 py-3 bg-white rounded-xl shadow border border-[#E5D9C4] hover:shadow-lg transition-all text-center"
+            >
+              <Truck className="text-[#E4572E] mx-auto mb-1" size={18} />
+              <span className="text-xs font-medium text-[#1B2A4A]">Clinic</span>
+            </button>
+            <button
+              onClick={() => router.push('/driver')}
+              className="flex-1 py-3 bg-white rounded-xl shadow border border-[#E5D9C4] hover:shadow-lg transition-all text-center"
+            >
+              <Car className="text-[#D9A441] mx-auto mb-1" size={18} />
+              <span className="text-xs font-medium text-[#1B2A4A]">Driver</span>
+            </button>
+          </div>
         </motion.div>
 
         {/* Footer */}

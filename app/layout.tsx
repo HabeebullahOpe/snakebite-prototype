@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Manrope } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/lib/hooks/useLanguage'
+import { AlertProvider } from '@/lib/hooks/useAlerts'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -26,10 +27,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
-      <body className="font-body bg-sand min-h-screen">
+    <html 
+      lang="en" 
+      className={`${inter.variable} ${manrope.variable}`}
+      suppressHydrationWarning
+    >
+      <body 
+        className="font-body bg-[#F3EBD9] min-h-screen"
+        suppressHydrationWarning
+      >
         <LanguageProvider>
-          {children}
+          <AlertProvider>
+            {children}
+          </AlertProvider>
         </LanguageProvider>
       </body>
     </html>

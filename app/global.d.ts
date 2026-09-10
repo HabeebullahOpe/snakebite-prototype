@@ -1,0 +1,42 @@
+// Allow CSS side-effect imports
+declare module '*.css' {
+  const content: { [className: string]: string }
+  export default content
+}
+
+// Allow SCSS
+declare module '*.scss' {
+  const content: { [className: string]: string }
+  export default content
+}
+
+// Allow images
+declare module '*.png' {
+  const content: string
+  export default content
+}
+
+declare module '*.jpg' {
+  const content: string
+  export default content
+}
+
+declare module '*.jpeg' {
+  const content: string
+  export default content
+}
+
+declare module '*.svg' {
+  const content: string
+  export default content
+}
+
+declare module '*.gif' {
+  const content: string
+  export default content
+}
+
+declare module '*.webp' {
+  const content: string
+  export default content
+}
